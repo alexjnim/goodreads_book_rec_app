@@ -1,9 +1,0 @@
-.env
-.gitignore
-Procfile
-README.md
-runtime.txt
-book_rec_env
-.vscode
-.pytest_cache
-__pycache__

@@ -1,0 +1,7 @@
+.env
+app_env
+*env
+*__pycache__
+data/ratings.csv
+data/books.csv
+data/public-viewer-book-rec-app-2-15084ef3a6b9.json
