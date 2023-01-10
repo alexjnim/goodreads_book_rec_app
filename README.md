@@ -1,4 +1,4 @@
-# FLASK BOOK RECOMMENDER APPLICATION 
+# goodreads book recommendeer application
 
 Find more info about this app and see it running [here](https://alexnim.com/coding-projects-book-rec-app.html).
 
