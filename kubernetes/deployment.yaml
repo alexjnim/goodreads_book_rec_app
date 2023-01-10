@@ -1,0 +1,46 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  labels:
+    app: flask_app
+  name: flask_app
+spec:
+  replicas: 1
+  selector:
+    matchLabels:
+      app: flask_app
+  template:
+    metadata:
+      labels:
+        app: flask_app
+    spec:
+      containers:
+      - image: busybox
+        name: busybox
+        port:
+          containerPort: 8000
+---
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  labels:
+    app: nginx
+  name: nginx
+spec:
+  replicas: 1
+  selector:
+    matchLabels:
+      app: nginx
+  template:
+    metadata:
+      labels:
+        app: nginx
+    spec:
+      containers:
+      - image: nginx
+        name: nginx
+        env:
+        - name: SERVER_NAME
+          value: localhost
+        port:
+          containerPort: 80
