@@ -2,9 +2,9 @@ server {
     listen       80;
     server_name  ${SERVER_NAME};
     location / {
-        proxy_pass   http://${HOST}:8000;
+        proxy_pass   http://${FLASK_APP_SERVICE_HOST}:8000;
     }
     location /results.html {
-        proxy_pass   http://${HOST}:8000/results.html;
+        proxy_pass   http://${FLASK_APP_SERVICE_HOST}:8000/results.html;
     }
 }
