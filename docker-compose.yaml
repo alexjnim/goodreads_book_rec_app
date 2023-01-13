@@ -4,6 +4,8 @@ services:
     build:
       context: ./app
       dockerfile: Dockerfile
+    volumes:
+      - ./app/data/public-viewer-book-rec-app-2-15084ef3a6b9.json:/app/data/public-viewer-book-rec-app-2-15084ef3a6b9.json
   proxy:
     build:
       context: ./nginx
