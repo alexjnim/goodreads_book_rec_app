@@ -2,45 +2,44 @@ apiVersion: apps/v1
 kind: Deployment
 metadata:
   labels:
-    app: flask_app
-  name: flask_app
+    app: flask-app
+  name: flask-app
 spec:
   replicas: 1
   selector:
     matchLabels:
-      app: flask_app
+      app: flask-app
   template:
     metadata:
       labels:
-        app: flask_app
+        app: flask-app
     spec:
       containers:
-      - image: busybox
-        name: busybox
-        port:
-          containerPort: 8000
----
-apiVersion: apps/v1
-kind: Deployment
-metadata:
-  labels:
-    app: nginx
-  name: nginx
-spec:
-  replicas: 1
-  selector:
-    matchLabels:
-      app: nginx
-  template:
-    metadata:
-      labels:
-        app: nginx
-    spec:
-      containers:
-      - image: nginx
-        name: nginx
+      - image: alexnimjli/book_rec_flask_app
+        name: flask-app
+        ports:
+        - containerPort: 8000
+      - image: nginx:1.13-alpine
+        name: nginx-proxy
+        command: ["/bin/sh", "-c", "envsubst < /etc/nginx/conf.d/default.conf.template > /etc/nginx/conf.d/default.conf; nginx -g 'daemon off;'"]
+        ports:
+        - containerPort: 8888
+        volumeMounts:
+        - mountPath: /etc/nginx/conf.d/default.conf.template
+          name: nginx-config
+          subPath: nginx.conf
         env:
-        - name: SERVER_NAME
-          value: localhost
-        port:
-          containerPort: 80
+          - name: SERVER_NAME
+            valueFrom:
+              configMapKeyRef:
+                name: nginx-config
+                key: SERVER_NAME
+          - name: FLASK_APP_SERVICE_HOST
+            valueFrom:
+              configMapKeyRef:
+                name: nginx-config
+                key: FLASK_APP_SERVICE_HOST
+      volumes:
+      - name: nginx-config
+        configMap:
+          name: nginx-config

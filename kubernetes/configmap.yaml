@@ -1,0 +1,18 @@
+apiVersion: v1
+kind: ConfigMap
+metadata:
+  name: nginx-config
+data:
+  SERVER_NAME: localhost
+  FLASK_APP_SERVICE_HOST: 0.0.0.0
+  nginx.conf: |-
+    server {
+      listen       8888;
+      server_name  ${SERVER_NAME};
+      location / {
+          proxy_pass   http://${FLASK_APP_SERVICE_HOST}:8000;
+      }
+      location /results.html {
+          proxy_pass   http://${FLASK_APP_SERVICE_HOST}:8000/results.html;
+      }
+    }

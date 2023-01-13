@@ -1,18 +1,18 @@
-# ClusterIP serivce to access flask app
-apiVersion: v1
-kind: Service
-metadata:
-  labels:
-    app: flask_app
-  name: flask_app_clusterip
-spec:
-  ports:
-  - protocol: TCP
-    port: 8000
-    targetPort: 8000
-  selector:
-    app: flask_app
-  type: ClusterIP
+# # ClusterIP serivce to access flask app
+# apiVersion: v1
+# kind: Service
+# metadata:
+#   labels:
+#     app: flask-app
+#   name: flask-app-clusterip
+# spec:
+#   ports:
+#   - protocol: TCP
+#     port: 8000
+#     targetPort: 8000
+#   selector:
+#     app: flask-app
+#   type: ClusterIP
 ---
 # NodePort service to expose app via nginx
 apiVersion: v1
@@ -20,7 +20,7 @@ kind: Service
 metadata:
   labels:
     app: nginx
-  name: nginx_nodeport
+  name: nginx-nodeport
 spec:
   ports:
   - protocol: TCP
