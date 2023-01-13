@@ -10,7 +10,5 @@ __pycache__
 book_rec_envs/*
 app/data/similarity_matrix.npy
 app/data/admin-book-rec-app-2-73ea95bae98e.json
-app/data/books.csv
-app/data/ratings.csv
 app/data/public-viewer-book-rec-app-2-15084ef3a6b9.json
 
