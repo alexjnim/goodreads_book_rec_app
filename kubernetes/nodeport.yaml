@@ -6,10 +6,10 @@ metadata:
     app: nginx
   name: nginx-nodeport
 spec:
+  type: NodePort
   ports:
   - protocol: TCP
     port: 38888
     targetPort: 8888
   selector:
-    app: flask-app
-  type: NodePort
+    app: multi-container-flask-app

@@ -2,17 +2,17 @@ apiVersion: apps/v1
 kind: Deployment
 metadata:
   labels:
-    app: flask-app
-  name: flask-app
+    app: book-rec-app
+  name: book-rec-app
 spec:
   replicas: 1
   selector:
     matchLabels:
-      app: flask-app
+      app: multi-container-flask-app
   template:
     metadata:
       labels:
-        app: flask-app
+        app: multi-container-flask-app
     spec:
       containers:
       - image: alexnimjli/book_rec_flask_app:1.0.0
@@ -23,6 +23,25 @@ spec:
         - mountPath: app/data/public-viewer-book-rec-app-2-15084ef3a6b9.json
           name: gbq-public-key
           subPath: public-key.json
+        readinessProbe:
+          httpGet:
+            path: /
+            port: 8000
+          initialDelaySeconds: 5
+          periodSeconds: 5
+        livenessProbe:
+          httpGet:
+            path: /
+            port: 8000
+          initialDelaySeconds: 5
+          periodSeconds: 5
+        resources:
+          requests:
+            memory: "700Mi"
+            cpu: "0.7"
+          limits:
+            memory: "750Mi"
+            cpu: "0.75"
       - image: nginx:1.13-alpine
         name: nginx-proxy
         command: ["/bin/sh", "-c", "envsubst < /etc/nginx/conf.d/default.conf.template > /etc/nginx/conf.d/default.conf; nginx -g 'daemon off;'"]
@@ -43,10 +62,18 @@ spec:
         - mountPath: /etc/nginx/conf.d/default.conf.template
           name: nginx-config
           subPath: nginx.conf
+        resources:
+          requests:
+            memory: "100Mi"
+            cpu: "0.1"
+          limits:
+            memory: "128Mi"
+            cpu: "0.15"
       volumes:
       - name: nginx-config
         configMap:
           name: nginx-config
       - name: gbq-public-key
-        configMap:
-          name: gbq-public-key
+        secret:
+          secretName: gbq-public-key
+          optional: False
