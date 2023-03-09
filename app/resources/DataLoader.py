@@ -1,6 +1,8 @@
 from surprise import Dataset, Reader
 import pandas as pd
 
+from utils.logger import get_logger
+
 
 class DataLoader:
     def __init__(
@@ -24,6 +26,7 @@ class DataLoader:
         self.rating_scale_max = rating_scale_max
         self.items_df = pd.read_csv(self.itemsPath)
         self.ratings_df = pd.read_csv(self.ratingsPath)
+        self.logger = get_logger()
 
     def loadData(self, size_of_data):
         ratings_extracted = self.ratings_df.sample(n=size_of_data)
@@ -78,7 +81,7 @@ class DataLoader:
             return "Not available"
 
     def getItemAuthorsByTitle(self, itemTitle):
-        if itemID in list(self.items_df[self.itemID_column]):
+        if itemTitle in list(self.items_df[self.itemID_column]):
             return self.items_df["authors"][
                 self.items_df[self.itemName_column] == itemTitle
             ].iloc[0]

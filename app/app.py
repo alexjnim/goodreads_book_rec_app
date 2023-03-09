@@ -1,10 +1,14 @@
+from flask import Flask, render_template, request
+
 from resources.GetRequestVariables import get_request_variables
 from resources.CreateNewUser import create_new_user
 from resources.CF_cached import item_based_rec_loader_cached_2
 from resources.RunDataLoader import run_data_loader
 from resources.ShuffleResults import shuffle_recs
 
-from flask import Flask, render_template, request
+from utils.logger import get_logger
+
+logger = get_logger()
 
 # Initialise the Flask app
 app = Flask(__name__, template_folder="./templates")
@@ -19,6 +23,7 @@ def main():
     if request.method == "POST":
 
         ml = run_data_loader()
+        logger.info("retrieving selected items")
         items = ml.items_df
         (
             selected_titles,
@@ -31,7 +36,7 @@ def main():
             return render_template("index.html", result=message)
 
         new_rows = create_new_user(selected_titles_ids, items)
-        print(new_rows)
+        logger.info(f"selected books: {new_rows}")
         recommendations, itemIDs, recommended_itemIDs = item_based_rec_loader_cached_2(
             ml, num_recs, new_rows
         )
@@ -55,7 +60,7 @@ def shuffle():
 
         selected_titles = request.form["selected_titles"]
         not_titles = request.form["not_titles"]
-        print(selected_titles)
+        logger.info(selected_titles)
         selected_titles = (
             selected_titles[1:-1]
             .replace(", #", " #")
@@ -65,7 +70,7 @@ def shuffle():
         )
         not_titles = not_titles[1:-1].replace("'", "").split(",")
 
-        print(not_titles[0])
+        logger.info(not_titles[0])
         if len(not_titles) == 1 and not_titles[0] == "":
             not_titles = []
 
