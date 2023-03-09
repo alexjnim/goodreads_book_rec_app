@@ -47,7 +47,11 @@ The following files were written for the purpose of deploying the API on Heroku'
 ```
 cd app
 
+python -m venv app_env
+
 source app_env/bin/activate
+
+pip install -r requirements.txt
 
 flask run
 ```
@@ -90,16 +94,12 @@ docker-compose down
 ``` shell
 minikube start
 
-# now in another terminal
 cd kubernetes
 
 kubectl apply -f .
 
-# now back to the minikube terminal
-# get service url
-minikube service <service_name> --url
-
-
+# get service url for nginx-nodeport
+minikube service nginx-nodeport --url
 ```
 
 # next steps

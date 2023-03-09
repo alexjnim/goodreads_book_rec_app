@@ -15,7 +15,7 @@ spec:
         app: multi-container-flask-app
     spec:
       containers:
-      - image: alexnimjli/book_rec_flask_app:1.0.0
+      - image: alexnimjli/book_rec_flask_app:1.2.0
         name: flask-app
         ports:
         - containerPort: 8000
@@ -33,15 +33,15 @@ spec:
           httpGet:
             path: /
             port: 8000
-          initialDelaySeconds: 5
-          periodSeconds: 5
+          initialDelaySeconds: 10
+          periodSeconds: 1000
         resources:
           requests:
             memory: "700Mi"
-            cpu: "0.7"
+            cpu: "0.5"
           limits:
             memory: "750Mi"
-            cpu: "0.75"
+            cpu: "1"
       - image: nginx:1.13-alpine
         name: nginx-proxy
         command: ["/bin/sh", "-c", "envsubst < /etc/nginx/conf.d/default.conf.template > /etc/nginx/conf.d/default.conf; nginx -g 'daemon off;'"]

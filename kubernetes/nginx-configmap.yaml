@@ -5,14 +5,17 @@ metadata:
 data:
   SERVER_NAME: localhost
   FLASK_APP_SERVICE_HOST: 0.0.0.0
+  #FLASK_APP_CLUSTERIP_SERVICE_HOST
   nginx.conf: |-
     server {
       listen       8888;
       server_name  ${SERVER_NAME};
       location / {
+          proxy_set_header Connection "";
           proxy_pass   http://${FLASK_APP_SERVICE_HOST}:8000;
       }
       location /results.html {
+          proxy_set_header Connection "";
           proxy_pass   http://${FLASK_APP_SERVICE_HOST}:8000/results.html;
       }
     }
