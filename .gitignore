@@ -1,7 +1,6 @@
 app_env
 .pytest_cache
 .vscode
-.env
 __pycache__
 .ipynb_checkpoints/
 *.ipynb
@@ -11,4 +10,4 @@ book_rec_envs/*
 app/data/similarity_matrix.npy
 app/data/admin-book-rec-app-2-73ea95bae98e.json
 app/data/public-viewer-book-rec-app-2-15084ef3a6b9.json
-
+kubernetes/deprecated/*
