@@ -4,7 +4,7 @@ kind: Service
 metadata:
   labels:
     app: nginx
-  name: nginx-loadbalancer
+  name: nginx-nodeport
 spec:
   type: NodePort
   ports:
