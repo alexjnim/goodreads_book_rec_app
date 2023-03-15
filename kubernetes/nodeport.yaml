@@ -4,12 +4,13 @@ kind: Service
 metadata:
   labels:
     app: nginx
-  name: nginx-nodeport
+  name: nginx-loadbalancer
 spec:
   type: NodePort
   ports:
   - protocol: TCP
-    port: 38888
+    nodePort: 30001
+    port: 30001
     targetPort: 8888
   selector:
     app: multi-container-flask-app
