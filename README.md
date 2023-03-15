@@ -104,9 +104,15 @@ minikube service nginx-nodeport --url
 
 # next steps
 
-[] - need to build a multi container pod
+[] - setup loadbalancer so can access from external url
 
 
+
+# exposing nodeport
+
+https://medium.com/@harsz89/exposing-service-with-nodeport-type-in-gke-76892652984c
+https://github.com/DanyLan/GKE-EXPOSE-SERVICES/blob/master/NodePort.md
+https://cloud.google.com/kubernetes-engine/docs/how-to/exposing-apps#access_your_service
 
 
 
